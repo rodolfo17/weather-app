@@ -4,7 +4,6 @@ import App from './App';
 
 test('renders learn react link', () => {
   render(<App />);
-  //const linkElement = screen.getByText();
   const titleElement = screen.getByLabelText('Forecast Aplication')
   console.log('ele', titleElement)
   expect(titleElement).toBeInTheDocument();
