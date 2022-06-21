@@ -17,6 +17,7 @@ const InputPanel = (props: { setData: Function }) => {
       <Row align='middle' justify='center' style={{ margin: '0px 0px 0px', width: '100%' }} >
         <Col span={20} >
           <Switch
+            data-testid='unitsId'
             checkedChildren='SI'
             unCheckedChildren='US'
             checked={siUnits}
