@@ -21,11 +21,27 @@ type FORECAST = {
   detailedForecast: string,
 }
 
+type ADDRESS = {
+  zip?: string,
+  streetName?: string,
+  preType?: string,
+  city?: string,
+  preDirection?: string,
+  suffixDirection?: string,
+  fromAddress?: string,
+  state?: string,
+  suffixType?: string,
+  toAddress?: string,
+  suffixQualifier?: string,
+  preQualifier?: string,
+}
+
 const { Header, Footer, Content } = Layout;
 
 function App() {
   const [loading, setLoading] = useState(false);
   const [forecast, setForecast] = useState([]);
+  const [address, setAddress] = useState({})
   const [seeWrongDir, setSeeWrongDir] = useState(false);
 
   const getData = (zip: string, address: string, siUnits: boolean) => {
@@ -39,6 +55,7 @@ function App() {
       url: 'http://localhost:3333/forecast/',
       params: { zip, address, units: siUnits ? 'si' : 'us' }
     }).then(res => {
+      setAddress(res.data.address)
       setForecast(res.data.forecast.periods)
       setLoading(false);
     }).catch(err => {
@@ -79,7 +96,11 @@ function App() {
                 onClose={() => setSeeWrongDir(false)}
               />
             ) : null}
-            
+            <Row align='middle' justify='space-around' >
+              {(address as ADDRESS).streetName ? 
+                (address as ADDRESS).streetName + ', ' + (address as ADDRESS).city + ', ' + (address as ADDRESS).state
+              : null} 
+            </Row>
             <Row align='middle' justify='space-around' >
               <InputPanel setData={getData} />
               <Col
