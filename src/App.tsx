@@ -44,7 +44,7 @@ function App() {
   const [address, setAddress] = useState({})
   const [seeWrongDir, setSeeWrongDir] = useState(false);
 
-  const getData = (zip: string, address: string, siUnits: boolean) => {
+  const getData = (zip: string, address: string, siUnits: boolean, number?: number) => {
     setLoading(true);
     axios({
       method: 'GET',
@@ -53,7 +53,7 @@ function App() {
         'Access-Control-Allow-Headers': '*'
       },
       url: 'http://localhost:3333/forecast/',
-      params: { zip, address, units: siUnits ? 'si' : 'us' }
+      params: { zip, address, number, units: siUnits ? 'si' : 'us' }
     }).then(res => {
       setAddress(res.data.address)
       setForecast(res.data.forecast.periods)

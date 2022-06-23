@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { CloudOutlined } from '@ant-design/icons';
-import { Col, Row, Button, Switch, Input, InputNumber } from 'antd';
+import { Col, Row, Button, Switch, Input, InputNumber, Select } from 'antd';
 
 const InputPanel = (props: { setData: Function }) => {
   const [zip, setZip] = useState('')
   const [address, setAddress] = useState('')
   const [siUnits, setSiUnits] = useState(true)
+  const [numberD, setNumberD] = useState(null)
 
   return (
     <Col span={6} style={{ height: '100%', marginTop: 10 }}>
@@ -50,13 +51,28 @@ const InputPanel = (props: { setData: Function }) => {
         </Col>
       </Row>
       <Row align='middle' justify='center' style={{ margin: '30px 0px 20px' }} >
+        <Col span={20}>
+          Number of days
+          <Select
+            style={{ width: '80%' }}
+            value={numberD}
+            onChange={val => setNumberD(val)}
+            placeholder="Select a number of days"
+          >
+            {[1,2,3,4,5,6,7].map(val => (
+              <Select.Option key={val} value={val}>{val}</Select.Option>
+            ))}
+          </Select>
+        </Col>
+      </Row>
+      <Row align='middle' justify='center' style={{ margin: '30px 0px 20px' }} >
         <Button
           type='primary'
           disabled={!zip || !address}
           icon={<CloudOutlined />}
           onClick={e => {
             e.preventDefault()
-            props.setData(zip, address, siUnits)
+            props.setData(zip, address, siUnits, numberD)
           }}
         >
           Get forecast
